@@ -1,21 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.scss';
 
 function Header() {
   return (
     <header className="header">
       <div className="menu-container">
-        <a href="/" className="logo">
+        <Link to="/" className="logo">
           <span className="logo-first">ANI</span>
           <span className="logo-second">LIST</span>
-        </a>
+        </Link>
         <div className="menu">
-          <a href="/" className="menu-link">
+          <Link to="/" className="menu-link">
             Home
-          </a>
-          <a href="/about" className="menu-link">
+          </Link>
+          <Link to="/about" className="menu-link">
             About
-          </a>
+          </Link>
         </div>
       </div>
       <div className="searchbar">

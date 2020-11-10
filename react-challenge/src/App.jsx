@@ -1,6 +1,9 @@
 // import logo from './logo.svg';
+import { Route, Switch } from 'react-router-dom';
 import './App.scss';
+
 import Header from './components/common/Header';
+import About from './views/About';
 import Home from './views/Home';
 
 // function App() {
@@ -28,7 +31,10 @@ function App() {
   return (
     <>
       <Header />
-      <Home />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/about" exact component={About} />
+      </Switch>
     </>
   );
 }
