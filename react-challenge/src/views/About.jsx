@@ -12,7 +12,7 @@ function About() {
           This website was made by <strong>Sulthon Abdul Malik</strong> in 2020.
         </p>
         <p>
-          Website made with the pourpose of study and try <strong>React JS</strong>,{' '}
+          Website made with the purpose of study and try <strong>React JS</strong>,{' '}
           <strong>React Router</strong> and <strong>Redux</strong>
         </p>
         <p>
@@ -25,27 +25,27 @@ function About() {
           </a>
         </p>
         <p>
-          This project uses
+          This project uses{' '}
           <a
             href="https://jikan.docs.apiary.io/#introduction/information/links"
             target="_blank"
             rel="noopener noreferrer"
           >
             Jinkan
-          </a>
+          </a>{' '}
           FREE API
         </p>
-        <p>New routes and details page are still under construction</p>
+        {/* <p>New routes and details page are still under construction</p> */}
         <br />
         <br />
         <p>Links</p>
         <p>
           <a href="https://linkedin.com/in/sulthon-am/" target="_blank" rel="noopener noreferrer">
-            Linkedin
+            LinkedIn
           </a>{' '}
           |{' '}
-          <a href="https://www.twitch.tv/sqslavv" target="_blank" rel="noopener noreferrer">
-            Twitch
+          <a href="https://github.com/samara98" target="_blank" rel="noopener noreferrer">
+            GitHub
           </a>
         </p>
       </div>

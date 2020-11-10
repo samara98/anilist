@@ -1,4 +1,6 @@
 import {
+  ANIME__CLEAR_DETAILED,
+  ANIME__GET_DETAILED,
   ANIME__SET_TODAY_ANIMES,
   ANIME__SET_TOP_AIRING_ANIMES,
   ANIME__SET_TOP_ANIMES,
@@ -39,10 +41,10 @@ function setTodayAnimes(state, data) {
   return { ...state, todayAnimes };
 }
 
-// function setDetailed(state, data) {
-//   const detailed = data;
-//   return { ...state, detailed };
-// }
+function setDetailed(state, data) {
+  const detailed = data;
+  return { ...state, detailed };
+}
 
 const animeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -54,6 +56,10 @@ const animeReducer = (state = initialState, action) => {
       return setTopMangas(state, action.payload);
     case ANIME__SET_TODAY_ANIMES:
       return setTodayAnimes(state, action.payload);
+    case ANIME__GET_DETAILED:
+      return setDetailed(state, action.payload);
+    case ANIME__CLEAR_DETAILED:
+      return setDetailed(state, initialState.detailed);
     default:
       return state;
   }

@@ -1,5 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
+import anotherExampleMiddleware from './stores/middlewares/anotherExampleMiddleware';
 
 import animeReducer from './stores/reducers/animeReducer';
 
@@ -12,6 +13,9 @@ const rootReducer = combineReducers({
   anime: animeReducer,
 });
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(anotherExampleMiddleware, thunk)),
+);
 
 export default store;

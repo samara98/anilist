@@ -21,10 +21,10 @@ function getCurrentDay() {
 function Home() {
   const dispatch = useDispatch();
 
-  const topAnimes = useSelector((state) => state.anime.topAnimes);
   const topAiringAnimes = useSelector((state) => state.anime.topAiringAnimes);
-  const topMangas = useSelector((state) => state.anime.topMangas);
   const todayAnimes = useSelector((state) => state.anime.todayAnimes);
+  const topAnimes = useSelector((state) => state.anime.topAnimes);
+  const topMangas = useSelector((state) => state.anime.topMangas);
 
   useEffect(
     () => {

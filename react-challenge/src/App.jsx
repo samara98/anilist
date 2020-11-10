@@ -3,9 +3,10 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
 
 import Header from './components/common/Header';
-import NotFoundPage from './views/Page404';
 import About from './views/About';
+import Detail from './views/Detail';
 import Home from './views/Home';
+import NotFoundPage from './views/Page404';
 
 // function App() {
 //   return (
@@ -35,6 +36,7 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
+        <Route path="/details/:type/:id" exact component={Detail} />
         <Route path="/404" exact component={NotFoundPage} />
         <Route path="*">
           <Redirect to="/404" />
