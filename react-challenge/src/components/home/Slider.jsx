@@ -30,16 +30,10 @@ function Slider({ items, title, mediaType }) {
         <h2 className={styles['separator--title']}>{title}</h2>
         <div className={styles['flexed-line']}></div>
         <div className={styles['separator--actions']}>
-          <button
-            onClick={() => handleSlide('l')}
-            className={styles['separator--actions--button']}
-          >
+          <button onClick={() => handleSlide('l')} className={styles['separator--actions--button']}>
             <span className={'material-icons'}>navigate_before</span>
           </button>
-          <button
-            onClick={() => handleSlide('r')}
-            className={styles['separator--actions--button']}
-          >
+          <button onClick={() => handleSlide('r')} className={styles['separator--actions--button']}>
             <span className={'material-icons'}>navigate_next</span>
           </button>
         </div>

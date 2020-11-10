@@ -1,8 +1,9 @@
 // import logo from './logo.svg';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
 
 import Header from './components/common/Header';
+import NotFoundPage from './views/Page404';
 import About from './views/About';
 import Home from './views/Home';
 
@@ -34,6 +35,10 @@ function App() {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/about" exact component={About} />
+        <Route path="/404" exact component={NotFoundPage} />
+        <Route path="*">
+          <Redirect to="/404" />
+        </Route>
       </Switch>
     </>
   );

@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './Home.scss';
 
 import Loader from '../components/common/Loader';
-import jikanApi from '../apis/jikanApi';
 import Slider from '../components/home/Slider';
-
-function getToday() {
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const now = new Date();
-  return days[now.getDay()];
-}
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getTodayAnimes,
+  getTopAiringAnimes,
+  getTopAnimeList,
+  getTopMangas,
+} from '../stores/actions/animeAction';
+import { Link } from 'react-router-dom';
 
 function getCurrentDay() {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -18,50 +19,33 @@ function getCurrentDay() {
 }
 
 function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [topAnimes, setTopAnimes] = useState([]);
-  const [topAiringAnimes, setTopAiringAnimes] = useState([]);
-  const [topMangas, setTopMangas] = useState([]);
-  const [todayAnimes, setTodayAnimes] = useState([]);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function getTopAiringAnimes() {
-      const response = await jikanApi.get('/top/anime/1/airing');
-      setTopAiringAnimes(response.data.top);
-      setIsLoading(false);
-    }
+  const topAnimes = useSelector((state) => state.anime.topAnimes);
+  const topAiringAnimes = useSelector((state) => state.anime.topAiringAnimes);
+  const topMangas = useSelector((state) => state.anime.topMangas);
+  const todayAnimes = useSelector((state) => state.anime.todayAnimes);
 
-    async function getTopAnimeList() {
-      const response = await jikanApi.get('/top/anime/1/upcoming');
-      setTopAnimes(response.data.top);
-    }
+  useEffect(
+    () => {
+      dispatch(getTopAiringAnimes());
+      dispatch(getTodayAnimes(getCurrentDay()));
+      dispatch(getTopAnimeList());
+      dispatch(getTopMangas());
 
-    async function getTodayAnimes(today) {
-      const response = await jikanApi.get(`/schedule/${today}`);
-      setTodayAnimes(response.data[getToday().toLowerCase()]);
-    }
-
-    async function getTopMangas() {
-      const response = await jikanApi.get('/top/manga');
-      setTopMangas(response.data.top);
-    }
-
-    getTopAiringAnimes();
-    getTopAnimeList();
-    getTodayAnimes(getCurrentDay());
-    getTopMangas();
-
-    return () => {};
-  }, []);
+      return () => {};
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <div className="home">
-      {isLoading && (
+      {topAiringAnimes.length === 0 ? (
         <div className="loading">
           <Loader />
         </div>
-      )}
-      {!isLoading && (
+      ) : (
         <>
           <div className="featured">
             <div className="featured--vertical">
@@ -85,10 +69,10 @@ function Home() {
                     sister's humanity.
                   </span>
                   <div className="featured--content--action">
-                    <a href="'/details/anime/40456'" className="featured--content--action--button">
+                    <Link to="/details/anime/40456" className="featured--content--action--button">
                       <span className="material-icons">theaters</span>
                       <span>Details</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
