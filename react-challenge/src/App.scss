@@ -33,3 +33,13 @@
     transform: rotate(360deg);
   }
 }
+
+// New
+// ===
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 150px);
+}
