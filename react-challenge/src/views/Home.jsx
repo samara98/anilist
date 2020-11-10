@@ -2,33 +2,73 @@ import React, { useEffect, useState } from 'react';
 import './Home.scss';
 
 import Loader from '../components/common/Loader';
+import jikanApi from '../apis/jikanApi';
+import Slider from '../components/home/Slider';
+
+function getToday() {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const now = new Date();
+  return days[now.getDay()];
+}
+
+function getCurrentDay() {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const now = new Date();
+  return days[now.getDay()];
+}
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [topAnimes, setTopAnimes] = useState([]);
+  const [topAiringAnimes, setTopAiringAnimes] = useState([]);
+  const [topMangas, setTopMangas] = useState([]);
+  const [todayAnimes, setTodayAnimes] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
+    async function getTopAiringAnimes() {
+      const response = await jikanApi.get('/top/anime/1/airing');
+      setTopAiringAnimes(response.data.top);
       setIsLoading(false);
-    }, 2000);
+    }
+
+    async function getTopAnimeList() {
+      const response = await jikanApi.get('/top/anime/1/upcoming');
+      setTopAnimes(response.data.top);
+    }
+
+    async function getTodayAnimes(today) {
+      const response = await jikanApi.get(`/schedule/${today}`);
+      setTodayAnimes(response.data[getToday().toLowerCase()]);
+    }
+
+    async function getTopMangas() {
+      const response = await jikanApi.get('/top/manga');
+      setTopMangas(response.data.top);
+    }
+
+    getTopAiringAnimes();
+    getTopAnimeList();
+    getTodayAnimes(getCurrentDay());
+    getTopMangas();
 
     return () => {};
   }, []);
 
   return (
-    <div class="home">
+    <div className="home">
       {isLoading && (
-        <div v-if="this.$store.state.topAiringAnimes.length === 0" class="loading">
+        <div className="loading">
           <Loader />
         </div>
       )}
       {!isLoading && (
-        <div v-else>
-          <div class="featured">
-            <div class="featured--vertical">
-              <div class="featured--horizontal">
-                <div class="featured--content">
-                  <div class="featured--content--title">Kimetsu no Yaiba</div>
-                  <span class="featured--content--synopsis">
+        <>
+          <div className="featured">
+            <div className="featured--vertical">
+              <div className="featured--horizontal">
+                <div className="featured--content">
+                  <div className="featured--content--title">Kimetsu no Yaiba</div>
+                  <span className="featured--content--synopsis">
                     Ever since the death of his father, the burden of supporting the family has
                     fallen upon Tanjirou Kamado's shoulders. Though living impoverished on a remote
                     mountain, the Kamado family are able to enjoy a relatively peaceful and happy
@@ -44,36 +84,25 @@ function Home() {
                     whatever it takes to slay the demons and protect the remnants of his beloved
                     sister's humanity.
                   </span>
-                  <div class="featured--content--action">
-                    <router-link
-                      to="'/details/anime/40456'"
-                      class="featured--content--action--button"
-                    >
-                      <span class="material-icons">theaters</span>
+                  <div className="featured--content--action">
+                    <a href="'/details/anime/40456'" className="featured--content--action--button">
+                      <span className="material-icons">theaters</span>
                       <span>Details</span>
-                    </router-link>
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="home--sliders">
-            <div class="home--sliders--item">
-              {/* <Slider
-              title="'Airing Animes'"
-              mediaType="anime"
-              items="this.$store.state.topAiringAnimes"
-            />
-            <Slider
-              title="'Today Releases'"
-              mediaType="anime"
-              items="this.$store.state.todayAnimes"
-            />
-            <Slider title="'Top upcoming'" mediaType="anime" items="this.$store.state.topAnimes" />
-            <Slider title="'top mangas'" mediaType="manga" items="this.$store.state.topMangas" /> */}
+          <div className="home--sliders">
+            <div className="home--sliders--item">
+              <Slider title="Airing Animes" mediaType="anime" items={topAiringAnimes} />
+              <Slider title="Today Releases" mediaType="anime" items={todayAnimes} />
+              <Slider title="Top Upcoming" mediaType="anime" items={topAnimes} />
+              <Slider title="Top Mangas" mediaType="manga" items={topMangas} />
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
